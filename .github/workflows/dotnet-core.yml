@@ -2,13 +2,11 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+    - '*.*.*'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,3 +21,15 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Pack Nuget package
+      run: dotnet pack --configuration Release
+    - name: Push Nuget package
+      run: dotnet nuget push **/*.nupkg
+            --api-key ${{ secrets.NUGET_API_KEY }}
+            --source https://api.nuget.org/v3/index.json
