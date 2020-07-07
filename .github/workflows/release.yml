@@ -3,7 +3,7 @@ name: Nuget package release
 on:
   create:
     tags:
-    - '*.*.*'
+    - '*.*.*.*'
 
 jobs:
   build:
