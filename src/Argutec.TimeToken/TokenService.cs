@@ -74,7 +74,8 @@ namespace Argutec.TimeToken
 
         private string GetTokenPayload(string aClientID, string aSecret, string aRandom, DateTime aNow)
         {
-            string lDateFormat = "yyyy-MM-ddHHmm";
+            //string lDateFormat = "yyyy-MM-ddHHmm";
+            string lDateFormat = "yyyy-MM-dd";
             string lSerializedDate = aNow.ToString(lDateFormat);
 
             return $"{Options.Salt};{aClientID};{aSecret};{lSerializedDate};{aRandom}";
